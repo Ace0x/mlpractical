@@ -4,7 +4,8 @@ import numpy as np
 
 import sys
 # sys.path.append('/path/to/mlpractical')
-
+os.environ['MLP_DATA_DIR'] = r"C:\Users\andre\Documents\UoE\mlpractical\data"
+# os.environ['MLP_DATA_DIR'] = r"/Users/ace0t/Documents/UoE/mlpractical/data"
 from mlp.layers import DropoutLayer
 from mlp.penalties import L1Penalty, L2Penalty
 parser = argparse.ArgumentParser(description='Welcome to regularization test script')

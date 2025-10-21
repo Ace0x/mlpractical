@@ -684,12 +684,11 @@ class DropoutLayer(StochasticLayer):
         """
         # What does the super call do here?
         # It initializes the base class (StochasticLayer) with the random number generator
-
-        super(DropoutLayer, self).__init__(rng)
-        assert incl_prob > 0. and incl_prob <= 1. # ensure valid inclusion probability
+        super(DropoutLayer, self).__init__(rng)      # important: init base class
+        assert 0.0 < incl_prob <= 1.0
         self.incl_prob = incl_prob
         self.share_across_batch = share_across_batch
-        self.rng = rng
+        self.rng = rng if rng is not None else np.random.RandomState()
         self._last_mask = None
 
         # Ok so a dropout layer randomly "drops" (sets to zero) some of the input units during training
@@ -714,18 +713,29 @@ class DropoutLayer(StochasticLayer):
         # What Stochastic says that the fprop method should propagate activations randomly each time
             # Training / stochastic mode: sample a 0/1 mask and apply it
         if stochastic:
-            # per-sample mask (default), or shared mask if requested
-            mask_shape = (1,) + inputs.shape[1:] if self.share_across_batch else inputs.shape
-            mask = self.rng.binomial(1, self.incl_prob, size=mask_shape).astype(inputs.dtype)
-            self._last_mask = mask
-            # Standard dropout: just apply the mask during training
-            return inputs * mask
+            # Determine the correct mask shape based on share_across_batch
+            if self.share_across_batch:
+                # Share the same mask across the batch
+                # Shape is (1, *feature_dims)
+                mask_shape = (1,) + inputs.shape[1:]
+            else:
+                # Use a different mask for each item in the batch
+                # Shape is (batch_size, *feature_dims)
+                mask_shape = inputs.shape
+
+            # Generate the mask using the correct shape
+            mask = (self.rng.rand(*mask_shape) < self.incl_prob)
+            
+            # Cache the mask
+            self._last_mask = mask.astype(inputs.dtype, copy=False)
+            
+            # Apply the mask (it will broadcast correctly if shared)
+            return inputs * self._last_mask
         else:
-            # deterministic test-time path: scale by incl_prob for expected value
+            # TEST-TIME: scale activations by p
             self._last_mask = None
             return inputs * self.incl_prob
-    
-
+        
     def bprop(self, inputs, outputs, grads_wrt_outputs):
         """Back propagates gradients through a layer.
 
@@ -747,12 +757,13 @@ class DropoutLayer(StochasticLayer):
         # During backpropagation, we only propagate gradients through the units that were not dropped 
         # Because the dropped units have no effect on the output
 
-        if self._last_mask is not None:
-            # Standard dropout: just apply the mask during backprop (no scaling)
-            return grads_wrt_outputs * self._last_mask
-        else:
-            # deterministic path: scale by incl_prob (matching fprop)
-            return grads_wrt_outputs * self.incl_prob
+        if self._last_mask is None:
+            # test-time path: gradient just passes through scaled by p,
+            # but since fprop multiplied outputs by p, the upstream grads
+            # already reflect that; pass-through is correct here.
+            return grads_wrt_outputs
+        # TRAIN-TIME: gradient masked (no extra scaling)
+        return grads_wrt_outputs * self._last_mask
 
     def __repr__(self):
         return 'DropoutLayer(incl_prob={0:.1f})'.format(self.incl_prob)

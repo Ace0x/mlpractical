@@ -295,8 +295,11 @@ class EMNISTDataProvider(DataProvider):
         (num_data, num_classes)
 
         """
-        
-        raise NotImplementedError
+        one_hot = self.to_one_of_k(int_targets)
+        smoothed_targets = one_hot * (1 - alpha) + (1 - one_hot) * (alpha / (self.num_classes - 1))
+        return smoothed_targets
+    
+
   
     
 

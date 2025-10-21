@@ -29,7 +29,9 @@ class L1Penalty(object):
         Returns:
             Value of penalty term.
         """
-        raise NotImplementedError
+        return self.coefficient * np.sum(np.abs(parameter))
+        
+
 
     def grad(self, parameter):
         """Calculate the penalty gradient with respect to the parameter.
@@ -41,7 +43,8 @@ class L1Penalty(object):
             Value of penalty gradient with respect to parameter. This
             should be an array of the same shape as the parameter.
         """
-        raise NotImplementedError
+        return self.coefficient * np.sign(parameter)
+        
 
     def __repr__(self):
         return 'L1Penalty({0})'.format(self.coefficient)
@@ -72,7 +75,7 @@ class L2Penalty(object):
         Returns:
             Value of penalty term.
         """
-        raise NotImplementedError
+        return self.coefficient * 0.5 * np.sum(parameter ** 2)
 
     def grad(self, parameter):
         """Calculate the penalty gradient with respect to the parameter.
@@ -84,7 +87,7 @@ class L2Penalty(object):
             Value of penalty gradient with respect to parameter. This
             should be an array of the same shape as the parameter.
         """
-        raise NotImplementedError
+        return self.coefficient * parameter
 
     def __repr__(self):
         return 'L2Penalty({0})'.format(self.coefficient)
@@ -111,7 +114,7 @@ class L1L2MixPenalty(object):
         Returns:
             Value of penalty term.
         """
-        raise NotImplementedError
+        return self.coefficient * (np.sum(np.abs(parameter)) + 0.5 * np.sum(parameter ** 2))
 
     def grad(self, parameter):
         """Calculate the penalty gradient with respect to the parameter.
@@ -123,7 +126,7 @@ class L1L2MixPenalty(object):
             Value of penalty gradient with respect to parameter. This
             should be an array of the same shape as the parameter.
         """
-        raise NotImplementedError
+        return self.coefficient * (np.sign(parameter) + parameter)
 
     def __repr__(self):
         return 'L1L2MixPenalty({0})'.format(self.coefficient)

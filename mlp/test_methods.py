@@ -8,7 +8,7 @@ import os
 
 
 def test_dropout_layer():
-    # loaded = np.load("../data/correct_results.npz")
+    #loaded = np.load("../data/correct_results.npz")
     rng = np.random.RandomState(92019)
     
     x = rng.normal(loc=0, scale=5.0, size=(50, 3, 64, 64))
@@ -22,7 +22,7 @@ def test_dropout_layer():
 
     grads = layer.bprop(inputs=x, outputs=out, grads_wrt_outputs=np.ones(x.shape))
 
-#     correct_outputs = correct_outputs['dropout']
+   # correct_outputs = correct_outputs['dropout']
 
     fprop_test = np.allclose(correct_outputs['DropoutLayer_fprop'], out)
 
