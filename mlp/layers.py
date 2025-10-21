@@ -682,11 +682,19 @@ class DropoutLayer(StochasticLayer):
             share_across_batch: Whether to use same dropout mask across
                 all inputs in a batch or use per input masks.
         """
+        # What does the super call do here?
+        # It initializes the base class (StochasticLayer) with the random number generator
+
         super(DropoutLayer, self).__init__(rng)
-        assert incl_prob > 0. and incl_prob <= 1.
+        assert incl_prob > 0. and incl_prob <= 1. # ensure valid inclusion probability
         self.incl_prob = incl_prob
         self.share_across_batch = share_across_batch
         self.rng = rng
+        self._last_mask = None
+
+        # Ok so a dropout layer randomly "drops" (sets to zero) some of the input units during training
+        # This helps prevent overfitting by reducing reliance on specific neurons
+
 
     def fprop(self, inputs, stochastic=True):
         """Forward propagates activations through the layer transformation.
@@ -703,7 +711,20 @@ class DropoutLayer(StochasticLayer):
         Returns:
             outputs: Array of layer outputs of shape (batch_size, output_dim).
         """
-        raise NotImplementedError
+        # What Stochastic says that the fprop method should propagate activations randomly each time
+            # Training / stochastic mode: sample a 0/1 mask and apply it
+        if stochastic:
+            # per-sample mask (default), or shared mask if requested
+            mask_shape = (1,) + inputs.shape[1:] if self.share_across_batch else inputs.shape
+            mask = self.rng.binomial(1, self.incl_prob, size=mask_shape).astype(inputs.dtype)
+            self._last_mask = mask
+            # Standard dropout: just apply the mask during training
+            return inputs * mask
+        else:
+            # deterministic test-time path: scale by incl_prob for expected value
+            self._last_mask = None
+            return inputs * self.incl_prob
+    
 
     def bprop(self, inputs, outputs, grads_wrt_outputs):
         """Back propagates gradients through a layer.
@@ -723,7 +744,15 @@ class DropoutLayer(StochasticLayer):
             Array of gradients with respect to the layer inputs of shape
             (batch_size, input_dim).
         """
-        raise NotImplementedError
+        # During backpropagation, we only propagate gradients through the units that were not dropped 
+        # Because the dropped units have no effect on the output
+
+        if self._last_mask is not None:
+            # Standard dropout: just apply the mask during backprop (no scaling)
+            return grads_wrt_outputs * self._last_mask
+        else:
+            # deterministic path: scale by incl_prob (matching fprop)
+            return grads_wrt_outputs * self.incl_prob
 
     def __repr__(self):
         return 'DropoutLayer(incl_prob={0:.1f})'.format(self.incl_prob)
