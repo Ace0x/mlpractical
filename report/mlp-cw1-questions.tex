@@ -96,13 +96,13 @@
 \begin{figure}[t]
     \centering
     \begin{subfigure}{\linewidth}
-        \includegraphics[width=\linewidth]{figures/empty_acc_curve_width.png}
+        \includegraphics[width=\linewidth]{figures/accuracy_32_64_128.png}
         \caption{accuracy by epoch}
         \label{fig:width_acccurves}
     \end{subfigure} 
     \begin{subfigure}{\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/empty_error_curve_width.png}
+        \includegraphics[width=\linewidth]{figures/error_32_64_128.png}
         \caption{error by epoch}
         \label{fig:width_errorcurves}
     \end{subfigure} 
@@ -119,13 +119,13 @@
 \begin{figure}[t]
     \centering
     \begin{subfigure}{\linewidth}
-        \includegraphics[width=\linewidth]{figures/empty_acc_curve_depth.png}
+        \includegraphics[width=\linewidth]{figures/depth_accuracy_128.png}
         \caption{accuracy by epoch}
         \label{fig:depth_acccurves}
     \end{subfigure} 
     \begin{subfigure}{\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/empty_error_curve_depth.png}
+        \includegraphics[width=\linewidth]{figures/depth_error_128.png}
         \caption{error by epoch}
         \label{fig:depth_errorcurves}
     \end{subfigure} 
@@ -205,9 +205,9 @@ Question Table 2 - Fill in Table 2 with the results from your experiments varyin
     \toprule
         \# Hidden Layers & Val. Acc. & Train Error & Val. Error \\
     \midrule
-         1               &      --.-      &   -.--- & -.---                \\
-         2               &      --.-      &   -.--- & -.---                \\
-         3               &      --.-      &   -.--- & -.---                \\ 
+         1               &      0.804      &   0.161 & 0.965                \\
+         2               &      0.817      &   0.100 & 1.560                \\
+         3               &      0.827      &   0.096 & 1.620                \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network depths on the EMNIST dataset.}
