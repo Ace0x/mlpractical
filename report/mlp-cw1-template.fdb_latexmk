@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex mlp-cw1-template"] 1761221590.47704 "mlp-cw1-template.aux" "mlp-cw1-template.bbl" "mlp-cw1-template" 1761222010.87606 0
+["bibtex mlp-cw1-template"] 1761221590.47704 "mlp-cw1-template.aux" "mlp-cw1-template.bbl" "mlp-cw1-template" 1761233662.50542 0
   "./icml2017.bst" 1760876636.22503 27014 3bf38cf1c3514ce2660b1751e86eb994 ""
   "./refs.bib" 1760876636.2254 1377 5340cb6bab3b0f6944f83c0790bd8be1 ""
-  "mlp-cw1-template.aux" 1761222010.54169 4796 51608ff95a7d1b4695752871e966a761 "pdflatex"
+  "mlp-cw1-template.aux" 1761233662.32638 4796 51608ff95a7d1b4695752871e966a761 "pdflatex"
   (generated)
   "mlp-cw1-template.bbl"
   "mlp-cw1-template.blg"
   (rewritten before read)
-["pdflatex"] 1761222009.37018 "/Users/ace0t/Documents/UoE/mlpractical/report/mlp-cw1-template.tex" "mlp-cw1-template.pdf" "mlp-cw1-template" 1761222010.87625 0
+["pdflatex"] 1761233661.66144 "/Users/ace0t/Documents/UoE/mlpractical/report/mlp-cw1-template.tex" "mlp-cw1-template.pdf" "mlp-cw1-template" 1761233662.50553 0
   "/Users/ace0t/Documents/UoE/mlpractical/report/mlp-cw1-template.tex" 1760876636.22519 14574 51dce6e81e6cd66f4f5aeffa38aa69d2 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -163,10 +163,10 @@
   "figures/error_l1l2_gap.png" 1761221990.38498 28609 809f56a9b56471ef367dcac617285ba9 ""
   "figures/fig1_acc.png" 1760876636.22484 39538 6a61b205268bd8a312ae94b4ba1a8eb8 ""
   "figures/fig1_err.png" 1760876636.22495 30354 8fb00f2898a7b195ae0b3ee0bf6d519c ""
-  "mlp-cw1-questions.tex" 1761221588.54474 13891 373452fc5f9186ba841c3ff813654b01 ""
-  "mlp-cw1-template.aux" 1761222010.54169 4796 51608ff95a7d1b4695752871e966a761 "pdflatex"
+  "mlp-cw1-questions.tex" 1761233661.51051 13893 8f31aaeabddee4261e248667e3064635 ""
+  "mlp-cw1-template.aux" 1761233662.32638 4796 51608ff95a7d1b4695752871e966a761 "pdflatex"
   "mlp-cw1-template.bbl" 1761221590.54403 1172 c5c44e169ec60600a93b6fbdd5aea9d3 "bibtex mlp-cw1-template"
-  "mlp-cw1-template.out" 1761222009.87588 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "mlp-cw1-template.out" 1761233661.91836 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "mlp-cw1-template.tex" 1760876636.22519 14574 51dce6e81e6cd66f4f5aeffa38aa69d2 ""
   "mlp2022.sty" 1760876636.22529 24081 4e2bfcbedb84a2816ab3084545879eef ""
   "mlp2022_includes.tex" 1760895153.00407 1306 b05e7603ddd57f4588376c64a14b548d ""
