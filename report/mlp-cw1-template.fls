@@ -383,6 +383,16 @@ INPUT ./figures/accuracy_gap_l1_l2.png
 INPUT ./figures/accuracy_gap_l1_l2.png
 INPUT ./figures/accuracy_gap_l1_l2.png
 INPUT ./figures/accuracy_gap_l1_l2.png
+INPUT ./figures/accuracy_l1l2_gap.png
+INPUT ./figures/accuracy_l1l2_gap.png
+INPUT ./figures/accuracy_l1l2_gap.png
+INPUT ./figures/accuracy_l1l2_gap.png
+INPUT ./figures/accuracy_l1l2_gap.png
+INPUT ./figures/error_l1l2_gap.png
+INPUT ./figures/error_l1l2_gap.png
+INPUT ./figures/error_l1l2_gap.png
+INPUT ./figures/error_l1l2_gap.png
+INPUT ./figures/error_l1l2_gap.png
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/public/txfonts/txbmi.vf
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxbmi.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxptmbi.tfm

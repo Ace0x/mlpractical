@@ -160,9 +160,28 @@
 
 %% Question Figure 5:
 \newcommand{\questionFigureFive} {
-\youranswer{Question Figure 5 - Add figures depicting the Validation Accuracy and Generalisation Gap (difference between validation and training error) for each of your 4 experiments  varying your hyperparameters for the combination of L1 and L2 regularisation (based on your implementation) depicted in Table 4.
+\youranswer{Question Figure 5 - Replace these images with figures depicting the Validation Accuracy, Training Accuracy, and Generalisation Gap (difference between validation and training performance) for each of the experiment results varying the Dropout inclusion rate and L1/L2 weight penalty depicted in Table 3 (including any results you have filled in).
+%
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}{.475\linewidth}
+        \includegraphics[width=\linewidth]{figures/accuracy_l1l2_gap.png}
+        \caption{Validation and training accuracy, and generalisation gap for l1+l2 weight penalty.}
+        \label{fig:dropoutrates}
+    \end{subfigure} 
+    \hfill
+    \begin{subfigure}{.475\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/error_l1l2_gap.png}
+        \caption{Training and validation error, and generalisation gap for l1+l2 weight penalty.}
+        \label{fig:weightrates}
+    \end{subfigure} 
+    \caption{Training and validation performance across regularisation strengths for L1/L2 methods. The generalisation gap highlights overfitting effects across experiments.}
+    \label{fig:hp_search}
+\end{figure*}
 }
 }
+
 
 %% Question Figure 6:
 \newcommand{\questionFigureSix} {
@@ -261,7 +280,23 @@ Question Table 3 - Fill in Table 3 with the results from your experiments for th
 %% Question Table 4:
 \newcommand{\questionTableFour} {
 \youranswer{
-Question Table 4 - Add a table with the results from your 4 experiments (by which we mean: 4 training runs, NOT 4 sets of experiments) varying your hyperparameters for the combination of L1 and L2 regularisation (based on your implementation).
+Question Table 4 - Results from 4 training runs varying L1+L2 regularisation.
+%
+\begin{table*}[t]
+    \centering
+    \begin{tabular}{c|c|ccc}
+    \toprule
+        Run & L1 / L2 & Val. Acc. (\%) & Train Error & Val. Error \\
+    \midrule
+         1 & $1\times10^{-6}$ / $1\times10^{-4}$ & 84.6 & 0.252 & 0.486 \\
+         2 & $1\times10^{-5}$ / $1\times10^{-4}$ & 84.7 & 0.268 & 0.469 \\
+         3 & $1\times10^{-6}$ / $5\times10^{-5}$ & 84.0 & 0.250 & 0.507 \\
+         4 & $1\times10^{-5}$ / $5\times10^{-5}$ & 84.3 & 0.267 & 0.488 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Validation accuracy (\%) and training/validation cross-entropy error for four runs with different L1/L2 hyperparameters (L1 / L2 shown in a single column to match the size/format of Table~3).}
+    \label{tab:l1l2_exps}
+\end{table*}
 }
 }
 
