@@ -26,28 +26,57 @@
 
 %% Question 1:
 \newcommand{\questionOne} {
-\youranswer{Question 1 - Explain what these figures contain and how the curves evolve, and spot where overfitting occurs. Reason based on the min/max points and velocities (direction and magnitude of change) of the accuracy and error curves}
-
+\youranswer{Early in training, training accuracy has a large positive velocity and training error a 
+large negative velocity, indicating rapid fit. The validation curves show smaller magnitudes and their
+ velocities decay toward zero as learning saturates. Around epoch 20, the validation accuracy velocity 
+ crosses from positive to negative (the curve peaks), while the validation error velocity crosses from 
+ negative to positive (the curve bottoms out). Meanwhile, training velocities remain favorable. This 
+ divergence still improving while validation starts worsening indicates overfitting
+}
 }
 
 %% Question 2:
 \newcommand{\questionTwo} {
-\youranswer{Question 2 - Present your network width experiment results by using the relevant figure and table}
+\youranswer{Question 2 - Present your network width experiment results by using the relevant figure and table||
+the validation accuracy improves only marginally with increased network width—rising by 3\% from 32 to 64 
+units and by 0.1\% from 64 to 128 units. Training curves show that wider networks converge faster and achieve 
+lower training error, decreasing by 58\% and 53\% across these increments, respectively. However, the validation 
+error increases by 38\% between 64 and 128 units, suggesting diminishing returns and potential overfitting at higher widths.
+}
 }
 
 %% Question 3:
 \newcommand{\questionThree} {
-\youranswer{Question 3 - Discuss whether varying width affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
+\youranswer{Question 3 - Discuss whether varying width affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)
+|| Increasing network width consistently improves training performance, as reflected by lower error and faster convergence. 
+This aligns with theoretical expectations that wider networks have greater capacity to model complex functions. However, 
+the minimal gains in validation accuracy and the rise in validation error at higher widths indicate overfitting, consistent
+ with prior findings that overly large models can memorize training data without improving generalization. Overall, the 
+ results align with theoretical predictions while illustrating the trade-off between model capacity and generalization.
+}
 }
 
 %% Question 4:
 \newcommand{\questionFour} {
-\youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table}
+\youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table ||
+Validation accuracy improves modestly with increased network depth, rising by 0.8\% from 1 to 2 layers and by 0.1\% 
+from 2 to 3 layers. Training curves show slightly faster convergence and lower training error, decreasing by 45\% 
+and 5\% across these increments, respectively. However, validation error rises by 61\% between 1 and 2 layers and by 
+9\% between 2 and 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
+in Figure~\ref{fig:depth_acccurves} and Figure~\ref{fig:depth_errorcurves}, where training performance continues to 
+improve while validation performance plateaus and diverges after approximately 20 epochs.
+}
 }
 
 %% Question 5:
 \newcommand{\questionFive} {
-\youranswer{Question 5 - Discuss whether varying depth affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
+\youranswer{Question 5 - Discuss whether varying depth affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)
+|| Increasing network depth yields consistent improvements in training performance, which aligns with theoretical 
+expectations that deeper architectures can represent more complex mappings. However, the limited gains in validation 
+accuracy and the rising validation error indicate overfitting, consistent with prior literature suggesting that deeper 
+networks require additional regularization or data to generalize effectively. Overall, the observed results match 
+expected theoretical trends, showing the balance between representational capacity and generalization.
+}
 }
 
 
@@ -97,13 +126,13 @@
 \begin{figure}[t]
     \centering
     \begin{subfigure}{\linewidth}
-        \includegraphics[width=\linewidth]{figures/accuracy_32_64_128.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_hidden_units_comparison_accuracy.pdf}
         \caption{accuracy by epoch}
         \label{fig:width_acccurves}
     \end{subfigure} 
     \begin{subfigure}{\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/error_32_64_128.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_hidden_units_comparison_error.pdf}
         \caption{error by epoch}
         \label{fig:width_errorcurves}
     \end{subfigure} 
@@ -120,13 +149,13 @@
 \begin{figure}[t]
     \centering
     \begin{subfigure}{\linewidth}
-        \includegraphics[width=\linewidth]{figures/depth_accuracy_128.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_128_depth_comparison_accuracy.pdf}
         \caption{accuracy by epoch}
         \label{fig:depth_acccurves}
     \end{subfigure} 
     \begin{subfigure}{\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/depth_error_128.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_128_depth_comparison_error.pdf}
         \caption{error by epoch}
         \label{fig:depth_errorcurves}
     \end{subfigure} 
@@ -143,13 +172,13 @@
 \begin{figure*}[t]
     \centering
     \begin{subfigure}{.475\linewidth}
-        \includegraphics[width=\linewidth]{figures/accuracy_gap_dropout.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_dropout_accuracy_gap.pdf}
         \caption{Accuracy and error by inclusion probability.}
         \label{fig:dropoutrates}
     \end{subfigure} 
     \begin{subfigure}{.475\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/accuracy_gap_l1_l2.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_weightdecay_accuracy_gap.pdf}
         \caption{Accuracy and error by weight penalty.}
         \label{fig:weightrates}
     \end{subfigure} 
@@ -166,14 +195,14 @@
 \begin{figure*}[t]
     \centering
     \begin{subfigure}{.475\linewidth}
-        \includegraphics[width=\linewidth]{figures/accuracy_l1l2_gap.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_l1l2_accuracy_gap.pdf}
         \caption{Validation and training accuracy, and generalisation gap for l1+l2 weight penalty.}
         \label{fig:dropoutrates}
     \end{subfigure} 
     \hfill
     \begin{subfigure}{.475\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/error_l1l2_gap.png}
+        \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_l1l2_error_gap.pdf}
         \caption{Training and validation error, and generalisation gap for l1+l2 weight penalty.}
         \label{fig:weightrates}
     \end{subfigure} 
@@ -203,9 +232,9 @@ Question Table 1 - Fill in Table 1 with the results from your experiments varyin
     \toprule
         \# Hidden Units & Val. Acc. & Train Error & Val. Error\\
     \midrule
-         32            &    78.7   &  0.566 &   0.694            \\
-         64            &    80.9   &  0.348  &   0.676               \\
-         128           &    80.4   &  0.161  &   0.965           \\ 
+         32            &    78.8   &  0.558 &   0.691            \\
+         64            &    81.00   &  0.353  &   0.665               \\
+         128           &    81.1   &  0.165  &   0.918           \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network widths on the EMNIST dataset.}
@@ -225,9 +254,9 @@ Question Table 2 - Fill in Table 2 with the results from your experiments varyin
     \toprule
         \# Hidden Layers & Val. Acc. & Train Error & Val. Error \\
     \midrule
-         1               &      80.4      &   0.161 & 0.965                \\
-         2               &      81.7      &   0.100 & 1.560                \\
-         3               &      82.7      &   0.096 & 1.620                \\ 
+         1               &      81.1      &   0.165 & 0.918                \\
+         2               &      81.8      &   0.091 & 1.480                \\
+         3               &      81.9      &   0.096 & 1.620                \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network depths on the EMNIST dataset.}
