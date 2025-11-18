@@ -27,24 +27,44 @@
 %% Question 1:
 \newcommand{\questionOne} {
 \youranswer{Question 1 - Explain what these figures contain and how the curves evolve, and spot where overfitting occurs. Reason based on the min/max points and velocities (direction and magnitude of change) of the accuracy and error curves}
-early in training, training accuracy has a large positive velocity and training error a 
-large negative velocity, indicating rapid fit. The validation curves show smaller magnitudes and their
- velocities decay toward zero as learning saturates. Around epoch 20, the validation accuracy velocity 
- crosses from positive to negative (the curve peaks), while the validation error velocity crosses from 
- negative to positive (the curve bottoms out). Meanwhile, training velocities remain favorable. This 
- divergence still improving while validation starts worsening indicates overfitting
-
-}
+early in training (epochs 0-5), both training and validation accuracies in Figure~\ref{fig:example_acccurves} have high positive velocities, rising steeply. This behavior is
+mirrored inversely in Figure~\ref{fig:example_errorcurves} by training and validation errors, which both have large negative velocities at this stage, 
+indicating rapid fit. From around epoch 10, the validation accuracy curves show smaller magnitudes and their
+velocities decay toward zero as learning saturates. This flattening is visible in Figure~\ref{fig:example_acccurves}, where the validation
+curve's slope decreases steadily between epochs 10-18 before reaching its peak. In contrast, 
+the training accuracy slope decreases but remains consistently positive throughout this period, 
+indicating continued improvement. Around epoch 20, the velocity of validation accuracy
+crosses from positive to negative (the curve peaks), while the validation error velocity crosses from
+negative to positive (the curve bottoms out). This mirrors the accuracy behaviour exactly: 
+in Figure~\ref{fig:example_errorcurves}, validation error reaches its minimum at the same point the 
+validation accuracy reaches its maximum. Meanwhile, training velocities in both Figures remain favorable. This
+divergence of training and validation performance, when the validation slopes change in sign and the training
+slopes remains favourable, is what indicates overfitting.}
 
 %% Question 2:
 \newcommand{\questionTwo} {
 \youranswer{Question 2 - Present your network width experiment results by using the relevant figure and table}
-the validation accuracy improves only marginally with increased network width—rising by 3\% from 32 to 64 
-units and by 0.1\% from 64 to 128 units. Training curves show that wider networks converge faster and achieve 
-lower training error, decreasing by 58\% and 53\% across these increments, respectively. However, the validation 
-error increases by 38\% between 64 and 128 units, suggesting diminishing returns and potential overfitting at higher widths.
+it shows that the validation accuracy improves only marginally with increased network 
+width---rising by 6.2\% from 32 to 64 units and by 1.13\% from 64 to 128 units. As seen in 
+Figure~\ref{fig:width_acccurves}, the accuracy curves for wider networks exhibit a \emph{higher positive velocity} 
+during the first 10--15 epochs, rising more steeply than the 32-unit model and indicating faster initial learning. 
+After this early phase, the \emph{validation accuracy velocities} for the 64- and 128-unit models gradually decline 
+towards zero as the curves flatten, and eventually \emph{change sign} around epoch 18 when the validation curves peak. 
+In contrast, the 32-unit model's validation curve maintains a small positive velocity for longer and peaks later, 
+around epoch 25, before plateauing.
 
-}
+A similar velocity pattern is seen in Figure~\ref{fig:width_errorcurves}. The training error curves for the wider 
+models display a \emph{large negative velocity} through epochs 10--15, reflecting rapid error reduction. Their validation error 
+curves also initially have negative velocity but reach their minimum earlier, after which their velocities 
+\emph{change from negative to positive}, indicating that the model begins to overfit. The 32-unit model shows a more 
+gradual decay in validation error velocity that approaches zero without sharply reversing.
+
+Numerically, training error decreases by 33.4\% and 17.6\% when increasing the width from 32$\rightarrow$64 and 
+64$\rightarrow$128 units, respectively, but validation error increases by 38.8\% when going from 32$\rightarrow$64 
+units, and 38.3\% when going from 64$\rightarrow$128 units. This widening 
+generalisation gap, together with the opposing validation and training velocities, demonstrates diminishing returns 
+at higher widths: the additional capacity drives continued improvement on the training set while harming validation 
+performance}
 
 %% Question 3:
 \newcommand{\questionThree} {
@@ -52,9 +72,8 @@ error increases by 38\% between 64 and 128 units, suggesting diminishing returns
 Increasing network width consistently improves training performance, as reflected by lower error and faster convergence. 
 This aligns with theoretical expectations that wider networks have greater capacity to model complex functions. However, 
 the minimal gains in validation accuracy and the rise in validation error at higher widths indicate overfitting, consistent
- with prior findings that overly large models can memorize training data without improving generalization. Overall, the 
- results align with theoretical predictions while illustrating the trade-off between model capacity and generalization.
-
+with prior findings that overly large models can memorize training data without improving generalization. Overall, the 
+results align with theoretical predictions while illustrating the trade-off between model capacity and generalization.
 }
 
 %% Question 4:
@@ -310,9 +329,9 @@ Question Table 1 - Fill in Table 1 with the results from your experiments varyin
     \toprule
         \# Hidden Units & Val. Acc. & Train Error & Val. Error\\
     \midrule
-         32            &    78.8   &  0.558 &   0.691            \\
-         64            &    81.00   &  0.353  &   0.665               \\
-         128           &    81.1   &  0.165  &   0.918           \\ 
+         32            &    70.5   &  0.889 &   1.030            \\
+         64            &    74.90   &  0.592  &   1.070               \\
+         128           &    75.7   &  0.488  &   1.480           \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network widths on the EMNIST dataset.}
