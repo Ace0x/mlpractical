@@ -83,14 +83,20 @@ results align with theoretical predictions while clearly illustrating the trade-
 %% Question 4:
 \newcommand{\questionFour} {
 \youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table}
-validation accuracy increases modestly with higher network depth, increasing by 1.7\% from 1 $\rightarrow$ 2 layers and by by 0.6\% 
-from 2 $\rightarrow$ 3 layers. Training curves show slightly faster convergence from 1 $\rightarrow$ 2 layers together with a lower training error, decreasing by -41.5\%. 
-However, this behaviour is not reflected when going from 2 $\rightarrow$ 3 layers, in which the training error increases by 25.8\%.
-This suggests that adding a third layer does not improve the model's ability to fit the training data, possibly due to optimisation difficulties, or diminishing returns from added depth.
-Additionally, validation error rises by 59.7\% between 1 $\rightarrow$ 2 layers and by 9.8\% between 2 $\rightarrow$ 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
-9.8\% between 2 $\rightarrow$ 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
-in Figure~\ref{fig:depth_acccurves} and Figure~\ref{fig:depth_errorcurves}, where training performance continues to 
-improve while validation performance plateaus and diverges after approximately 20 epochs.}
+Validation accuracy increases modestly with depth, rising by 1.7\% from 1~$\rightarrow$~2 layers and by 0.6\% from 
+2~$\rightarrow$~3 layers. As shown in Figure~\ref{fig:depth_acccurves}, deeper networks converge faster and achieve 
+lower training error overall: training error drops from 0.159 to 0.093 when increasing to 2 layers, and remains low 
+for 3 layers (0.117). This indicates that additional depth improves the ability to fit the training data, although 
+the benefit saturates beyond two layers.
+
+However, this improvement in training fit does not translate to better generalisation. Validation error rises sharply
+by 59.7\% from 1~$\rightarrow$~2 layers and by a further 9.8\% from 2~$\rightarrow$~3 layers, as seen in 
+Figure~\ref{fig:depth_errorcurves}, where the validation curves begin diverging from the training curves after 
+approximately 20 epochs. The pattern is consistent: deeper models achieve better training fits but increasingly worse 
+validation performance due to overfitting. This aligns with theoretical expectations that deeper networks possess 
+higher compositional expressivity and therefore higher variance, leading them to fit training-specific patterns that 
+do not generalise without additional regularisation.}
+
 
 %% Question 5:
 \newcommand{\questionFive} {
