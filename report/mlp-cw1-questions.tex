@@ -45,48 +45,52 @@ slopes remains favourable, is what indicates overfitting.}
 \newcommand{\questionTwo} {
 \youranswer{Question 2 - Present your network width experiment results by using the relevant figure and table}
 it shows that the validation accuracy improves only marginally with increased network 
-width---rising by 6.2\% from 32 to 64 units and by 1.13\% from 64 to 128 units. As seen in 
-Figure~\ref{fig:width_acccurves}, the accuracy curves for wider networks exhibit a \emph{higher positive velocity} 
+width---rising by 2.2\% from 32 $\rightarrow$ 64 units and decreasing slightly by -0.3\% from 64 $\rightarrow$ 128 units. As seen in 
+Figure~\ref{fig:width_acccurves}, the accuracy curves for wider networks exhibit a higher positive velocity 
 during the first 10--15 epochs, rising more steeply than the 32-unit model and indicating faster initial learning. 
-After this early phase, the \emph{validation accuracy velocities} for the 64- and 128-unit models gradually decline 
-towards zero as the curves flatten, and eventually \emph{change sign} around epoch 18 when the validation curves peak. 
-In contrast, the 32-unit model's validation curve maintains a small positive velocity for longer and peaks later, 
-around epoch 25, before plateauing.
+After this early phase, the validation accuracy velocities for the 64- and 128-unit models gradually decline 
+towards zero as the curves flatten, and eventually change sign around epoch 18 when the validation curves peak. 
+In contrast, the 32-unit model's validation curve maintains a small positive velocity for longer and seems to be plateauing at around epoch 100.
 
 A similar velocity pattern is seen in Figure~\ref{fig:width_errorcurves}. The training error curves for the wider 
-models display a \emph{large negative velocity} through epochs 10--15, reflecting rapid error reduction. Their validation error 
+models display a large negative velocity through epochs 10--15, reflecting rapid error reduction. Their validation error 
 curves also initially have negative velocity but reach their minimum earlier, after which their velocities 
-\emph{change from negative to positive}, indicating that the model begins to overfit. The 32-unit model shows a more 
+change from negative to positive, indicating that the model begins to overfit. The 32-unit model shows a more 
 gradual decay in validation error velocity that approaches zero without sharply reversing.
 
-Numerically, training error decreases by 33.4\% and 17.6\% when increasing the width from 32$\rightarrow$64 and 
-64$\rightarrow$128 units, respectively, but validation error increases by 38.8\% when going from 32$\rightarrow$64 
-units, and 38.3\% when going from 64$\rightarrow$128 units. This widening 
+Numerically, training error decreases by -36.5\% and -54.6\% when increasing the width from 32$\rightarrow$64 and 
+64$\rightarrow$128 units, respectively, but validation error increases by 15.3\% when going from 32$\rightarrow$64 
+units, and 18.7\% when going from 64$\rightarrow$128 units. This widening 
 generalisation gap, together with the opposing validation and training velocities, demonstrates diminishing returns 
 at higher widths: the additional capacity drives continued improvement on the training set while harming validation 
 performance}
 
 %% Question 3:
 \newcommand{\questionThree} {
+\capacity
 \youranswer{Question 3 - Discuss whether varying width affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
-Increasing network width consistently improves training performance, as reflected by lower error and faster convergence. 
-This aligns with theoretical expectations that wider networks have greater capacity to model complex functions. However, 
-the minimal gains in validation accuracy and the rise in validation error at higher widths indicate overfitting, consistent
-with prior findings that overly large models can memorize training data without improving generalization. Overall, the 
-results align with theoretical predictions while illustrating the trade-off between model capacity and generalization.
+This behaviour matches the classical bias--variance trade-off described in 
+Chapter~5 of Deep Learning by Goodfellow et al.~\cite{Goodfellow-et-al-2016}, and illustrated in 
+Figure~\ref{fig:capacity}. As width increases, model capacity rises, leading to 
+monotonically decreasing training error but worsening validation error beyond a 
+certain point, which is exactly what we observe in Figure~\ref{fig:width_errorcurves} for the 64- and 128-unit models. The pattern is consistent across widths: as the network becomes larger, the generalisation gap widens.
+
+The minimal gains in validation accuracy and the rise in validation error at higher widths indicate overfitting. This implies that 
+overly large models can memorise training data without improving generalisation. In contrast, the 32-unit model demonstrates a more favourable balance: its validation accuracy continues to improve until it plateaus, but it does not worsen as observed for wider models. Overall, the 
+results align with theoretical predictions while clearly illustrating the trade-off between model capacity and generalisation
 }
 
 %% Question 4:
 \newcommand{\questionFour} {
 \youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table}
-validation accuracy improves modestly with increased network depth, rising by 0.8\% from 1 to 2 layers and by 0.1\% 
-from 2 to 3 layers. Training curves show slightly faster convergence and lower training error, decreasing by 45\% 
-and 5\% across these increments, respectively. However, validation error rises by 61\% between 1 and 2 layers and by 
-9\% between 2 and 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
+validation accuracy increases modestly with higher network depth, increasing by 1.7\% from 1 $\rightarrow$ 2 layers and by by 0.6\% 
+from 2 $\rightarrow$ 3 layers. Training curves show slightly faster convergence from 1 $\rightarrow$ 2 layers together with a lower training error, decreasing by -41.5\%. 
+However, this behaviour is not reflected when going from 2 $\rightarrow$ 3 layers, in which the training error increases by 25.8\%.
+This suggests that adding a third layer does not improve the model's ability to fit the training data, possibly due to optimisation difficulties, or diminishing returns from added depth.
+Additionally, validation error rises by 59.7\% between 1 $\rightarrow$ 2 layers and by 9.8\% between 2 $\rightarrow$ 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
+9.8\% between 2 $\rightarrow$ 3 layers, suggesting diminishing returns and overfitting at higher depths. This trend is reflected 
 in Figure~\ref{fig:depth_acccurves} and Figure~\ref{fig:depth_errorcurves}, where training performance continues to 
-improve while validation performance plateaus and diverges after approximately 20 epochs.
-
-}
+improve while validation performance plateaus and diverges after approximately 20 epochs.}
 
 %% Question 5:
 \newcommand{\questionFive} {
@@ -315,6 +319,17 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
 \end{figure*}
 }
 }
+\newcommand{\capacity}{
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/Capacity.png}
+    \caption{Bias--variance trade-off (Reproduced from Figure 5.3 in \cite{Goodfellow-et-al-2016}). 
+    As model capacity increases, training error decreases monotonically while validation 
+    error eventually rises due to overfitting.}
+    \label{fig:capacity}
+\end{figure}
+}
+
 
 %% - - - - - - - - - - - - TABLES - - - - - - - - - - - - 
 
@@ -329,9 +344,9 @@ Question Table 1 - Fill in Table 1 with the results from your experiments varyin
     \toprule
         \# Hidden Units & Val. Acc. & Train Error & Val. Error\\
     \midrule
-         32            &    70.5   &  0.889 &   1.030            \\
-         64            &    74.90   &  0.592  &   1.070               \\
-         128           &    75.7   &  0.488  &   1.480           \\ 
+         32            &    79.0   &  0.552 &   0.700            \\
+         64            &    80.7   &  0.350  &   0.807               \\
+         128           &    80.4   &  0.159  &   0.958           \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network widths on the EMNIST dataset.}
@@ -351,9 +366,9 @@ Question Table 2 - Fill in Table 2 with the results from your experiments varyin
     \toprule
         \# Hidden Layers & Val. Acc. & Train Error & Val. Error \\
     \midrule
-         1               &      81.1      &   0.165 & 0.918                \\
-         2               &      81.8      &   0.091 & 1.480                \\
-         3               &      81.9      &   0.096 & 1.620                \\ 
+         1               &      80.4        &  0.159  & 0.958                 \\
+         2               &      81.8      &   0.093 & 1.530                \\
+         3               &      82.3      &   0.117 & 1.680                \\ 
     \bottomrule
     \end{tabular}
     \caption{Validation accuracy (\%) and training/validation error (in terms of cross-entropy error) for varying network depths on the EMNIST dataset.}
