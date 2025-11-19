@@ -83,31 +83,46 @@ results align with theoretical predictions while clearly illustrating the trade-
 %% Question 4:
 \newcommand{\questionFour} {
 \youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table}
-Validation accuracy increases modestly with depth, rising by 1.7\% from 1~$\rightarrow$~2 layers and by 0.6\% from 
-2~$\rightarrow$~3 layers. As shown in Figure~\ref{fig:depth_acccurves}, deeper networks converge faster and achieve 
-lower training error overall: training error drops from 0.159 to 0.093 when increasing to 2 layers, and remains low 
-for 3 layers (0.117). This indicates that additional depth improves the ability to fit the training data, although 
-the benefit saturates beyond two layers.
+Validation accuracy increases modestly with depth, rising by 1.7\% from 1$\rightarrow$2 layers and by a further
+0.6\% from 2$\rightarrow$3 layers (Table~\ref{tab:depth_exps}). Figure~\ref{fig:depth_acccurves} shows that deeper networks
+exhibit steeper initial accuracy velocities during epochs 0--10: both the 2- and 3-layer models rise more sharply 
+than the 1-layer model, indicating faster early convergence. Between epochs 10--15, the validation curves begin 
+to flatten as their velocities approach zero, and around epoch~20 their slopes change sign, marking the peak 
+validation accuracy. Beyond this point, the validation accuracy decreases with negative velocity.
 
-However, this improvement in training fit does not translate to better generalisation. Validation error rises sharply
-by 59.7\% from 1~$\rightarrow$~2 layers and by a further 9.8\% from 2~$\rightarrow$~3 layers, as seen in 
-Figure~\ref{fig:depth_errorcurves}, where the validation curves begin diverging from the training curves after 
-approximately 20 epochs. The pattern is consistent: deeper models achieve better training fits but increasingly worse 
-validation performance due to overfitting. This aligns with theoretical expectations that deeper networks possess 
-higher compositional expressivity and therefore higher variance, leading them to fit training-specific patterns that 
-do not generalise without additional regularisation.}
+This behaviour is mirrored in the error curves in Figure~\ref{fig:depth_errorcurves}. Validation error decreases rapidly 
+during epochs 0--10 (large negative velocity), approaches a minimum between epochs 10--15, and then increases 
+after epoch~20 as its velocity becomes positive. Training curves follow a similar but consistently more favourable 
+trajectory: deeper networks show stronger negative training-error velocities up to roughly epoch~20 and converge 
+to lower final training errors (0.159~$\rightarrow$~0.093~$\rightarrow$~0.117) before plateauing. This indicates that 
+additional depth improves the model's ability to fit the training data, although the benefit saturates beyond two 
+layers.
+
+However, these improvements do not translate into better generalisation. Validation error increases by 59.7\%
+from 1$\rightarrow$2 layers and by 9.8\% from 2$\rightarrow$3 layers, and the validation curves diverge from the 
+training curves shortly after epoch~20. This indicates earlier and stronger overfitting in deeper models, validating
+that the one layer model suffers the least from overfitting.}
 
 
 %% Question 5:
 \newcommand{\questionFive} {
 \youranswer{Question 5 - Discuss whether varying depth affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
-Increasing network depth yields consistent improvements in training performance, which aligns with theoretical 
-expectations that deeper architectures can represent more complex mappings. However, the limited gains in validation 
-accuracy and the rising validation error indicate overfitting, consistent with prior literature suggesting that deeper 
-networks require additional regularization or data to generalize effectively. Overall, the observed results match 
-expected theoretical trends, showing the balance between representational capacity and generalization.
+Increasing depth affects the results in a consistent and largely expected manner. Training error decreases 
+substantially when moving from 1 to 2 layers (0.159~$\rightarrow$~0.093), but the improvement saturates at 3 layers, 
+where the training error increases slightly to 0.117. This behaviour aligns with theoretical expectations that 
+additional depth increases representational capacity but can introduce optimisation difficulties or diminishing 
+returns in small fully connected networks.
 
-}
+At the same time, the worsening validation error and the earlier divergence between training and validation curves 
+indicate that deeper networks exhibit higher variance. This matches the classical capacity--generalisation 
+relationship described by Goodfellow et al., \cite{Goodfellow-et-al-2016}: as depth increases, models become more expressive 
+and more capable of fitting the training data, but also more prone to memorising training-specific patterns without 
+sufficient regularisation or data.
+
+The limited improvement in validation accuracy, together with the substantial rise in validation error for the 
+2-layer and 3-layer models, therefore reflects exactly the trend predicted by theory: increased depth improves 
+representation capacity but degrades generalisation in this setting. Overall, the empirical results are consistent 
+with expectations from the literature}
 
 
 %% Question 6:
@@ -136,9 +151,7 @@ In our implementation, we can use a mixing parameter $\alpha$ to control the rel
     \mathcal{L} = \mathcal{L}_{\text{data}} + \lambda \left( \alpha \sum_{i} |w_i| + (1 - \alpha) \sum_{i} w_i^2 \right)
 \end{equation}
 where $\lambda$ is the overall regularisation strength, and $\alpha$ (ranging from 0 to 1) determines the balance between L1 and L2 penalties.
-By controlling $\alpha$, we can adjust the model to prioritize either sparsity or stability, depending on the requirements of the task at hand.
-
-}
+By controlling $\alpha$, we can adjust the model to prioritize either sparsity or stability, depending on the requirements of the task at hand}
 
 
 %% Question 7:
