@@ -26,7 +26,6 @@
 
 %% Question 1:
 \newcommand{\questionOne} {
-\youranswer{Question 1 - Explain what these figures contain and how the curves evolve, and spot where overfitting occurs. Reason based on the min/max points and velocities (direction and magnitude of change) of the accuracy and error curves}
 early in training (epochs 0-5), both training and validation accuracies in Figure~\ref{fig:example_acccurves} have high positive velocities, rising steeply. This behavior is
 mirrored inversely in Figure~\ref{fig:example_errorcurves} by training and validation errors, which both have large negative velocities at this stage, 
 indicating rapid fit. From around epoch 10, the validation accuracy curves show smaller magnitudes and their
@@ -39,11 +38,10 @@ negative to positive (the curve bottoms out). This mirrors the accuracy behaviou
 in Figure~\ref{fig:example_errorcurves}, validation error reaches its minimum at the same point the 
 validation accuracy reaches its maximum. Meanwhile, training velocities in both Figures remain favorable. This
 divergence of training and validation performance, when the validation slopes change in sign and the training
-slopes remains favourable, is what indicates overfitting.}
+slopes remains favourable, is what indicates overfitting}
 
 %% Question 2:
 \newcommand{\questionTwo} {
-\youranswer{Question 2 - Present your network width experiment results by using the relevant figure and table}
 it shows that the validation accuracy improves only marginally with increased network 
 width---rising by 2.2\% from 32 $\rightarrow$ 64 units and decreasing slightly by -0.3\% from 64 $\rightarrow$ 128 units. As seen in 
 Figure~\ref{fig:width_acccurves}, the accuracy curves for wider networks exhibit a higher positive velocity 
@@ -68,7 +66,6 @@ performance}
 %% Question 3:
 \newcommand{\questionThree} {
 \capacity
-\youranswer{Question 3 - Discuss whether varying width affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
 This behaviour matches the classical bias--variance trade-off described in 
 Chapter~5 of Deep Learning by Goodfellow et al.~\cite{Goodfellow-et-al-2016}, and illustrated in 
 Figure~\ref{fig:capacity}. As width increases, model capacity rises, leading to 
@@ -82,8 +79,7 @@ results align with theoretical predictions while clearly illustrating the trade-
 
 %% Question 4:
 \newcommand{\questionFour} {
-\youranswer{Question 4 - Present your network depth experiment results by using the relevant figure and table}
-Validation accuracy increases modestly with depth, rising by 1.7\% from 1$\rightarrow$2 layers and by a further
+validation accuracy increases modestly with depth, rising by 1.7\% from 1$\rightarrow$2 layers and by a further
 0.6\% from 2$\rightarrow$3 layers (Table~\ref{tab:depth_exps}). Figure~\ref{fig:depth_acccurves} shows that deeper networks
 exhibit steeper initial accuracy velocities during epochs 0--10: both the 2- and 3-layer models rise more sharply 
 than the 1-layer model, indicating faster early convergence. Between epochs 10--15, the validation curves begin 
@@ -101,12 +97,11 @@ layers.
 However, these improvements do not translate into better generalisation. Validation error increases by 59.7\%
 from 1$\rightarrow$2 layers and by 9.8\% from 2$\rightarrow$3 layers, and the validation curves diverge from the 
 training curves shortly after epoch~20. This indicates earlier and stronger overfitting in deeper models, validating
-that the one layer model suffers the least from overfitting.}
+that the one layer model suffers the least from overfitting}
 
 
 %% Question 5:
 \newcommand{\questionFive} {
-\youranswer{Question 5 - Discuss whether varying depth affects the results in a consistent way, and whether the results are expected and match well with the prior knowledge (by which we mean your expectations as are formed from the relevant Theory and literature)}
 Increasing depth affects the results in a consistent and largely expected manner. Training error decreases 
 substantially when moving from 1 to 2 layers (0.159~$\rightarrow$~0.093), but the improvement saturates at 3 layers, 
 where the training error increases slightly to 0.117. This behaviour aligns with theoretical expectations that 
@@ -127,7 +122,6 @@ with expectations from the literature}
 
 %% Question 6:
 \newcommand{\questionSix} {
-\youranswer{Question 6 - Explain how one could use a combination of L1 and L2 regularisation. Discuss any potential benefits of this approach. Present an equation for this combined loss function and explain all relevant variables and hyperparameters.}
 According to \citealt{Zhang2018}, combining L1 and L2 regularisation can leverage the strengths of both methods to improve model performance. This technique is often referred to as Elastic Net regularisation. The combined loss function can be expressed as:
 \begin{equation}
     \mathcal{L} = \mathcal{L}_{\text{data}} + \lambda_1 \sum_{i} |w_i| + \lambda_2 \sum_{i} w_i^2
@@ -156,67 +150,152 @@ By controlling $\alpha$, we can adjust the model to prioritize either sparsity o
 
 %% Question 7:
 \newcommand{\questionSeven} {
-\youranswer{Question 7 - Assume you had a limited experiment budget for exactly \textbf{4} experiment runs dedicated to testing the effectiveness of your proposed combination of L1 and L2 Regularization in Section~\ref{sec:L1L2combo}. Argue for which 4 configurations to run based on any previous results or other information you consider relevant. Run those experiments and add the results in Table~4 and Figure~5 (you will then discuss those results alongside all others in the next question below).
+The results from L1 and L2 regularization methods provided in Table~\ref{tab:hp_search} show that the two penalties behave very differently with respect to $\lambda$. 
+For L1, the best-performing value is $\lambda = 5\times10^{-4}$, which yields the highest validation accuracy (79.5\%)
+ and the lowest validation error (0.658) among the stable runs. Increasing $\lambda$ further leads to rapid degradation: 
+ at $\lambda \geq 10^{-3}$ the model already performs significantly worse, and at $\lambda \geq 5\times10^{-3}$ 
+ optimisation collapses entirely. This indicates that L1 is highly sensitive and tends to function well at very small regularisation strengths.
 
-(Even if you have not managed to implement your L1 and L2 combination; still argue based on your proposed approach).}
-Analysis on prior L1 and L2 results from \ref{tab:hp_search} suggests optimal hyperparameters around $5\times10^{-4}$ for L1 and $5\times10^{-4}$ for L2 by suggesting that lower regularisation strengths yield better validation accuracy.
-To explore this further within our limited budget of 4 experiment runs, we select a fixed regularization strength of $\lambda = 1 \times 10^{-5}$, slightly lower than our best individual penalties to follow the trend of small strengths.
-We then vary the mixing parameter $\alpha$ across a range from L1-dominant to L2-dominant configurations to assess the impact of the balance between the two penalties.
-Our selected configurations are as follows:
+For L2, the optimal region is broader. Validation accuracy is highest at $\lambda = 5\times10^{-4}$ (85.1\%), 
+while validation error is lowest at $\lambda = 10^{-3}$ (0.453). Suggesting that L2 performs best with moderate regularisation ranging 
+from $5\times10^{-4}$--$10^{-3}$,  and is far more tolerant than L1. However, at $\lambda = 5\times10^{-2}$ even L2 collapses, 
+showing that excessively large penalties remain undesirable.
+
+Although L2 performs best at moderate $\lambda$, the strong sensitivity of L1 means that any $\lambda$ chosen in this
+ middle region would cause the L1 term to dominate the combined Elastic Net penalty.
+ In order to study the interaction between the L1 and L2 components, we require a $\lambda$ 
+ small enough that both penalties contribute, and does not overwhelm optimisation, so that the 
+ effect of varying $\alpha$ can be observed cleanly.
+
+This motivates the following research question:
+
+\begin{quote}
+\textit{When $\lambda$ is small enough that neither regulariser dominates, does shifting the Elastic Net mixture toward L1 or toward L2 lead to better generalisation on EMNIST?}
+\end{quote}
+
+To answer this, we fix a conservative value of $\lambda = 5\times10^{-5}$, which ensures 
+stable training while preserving meaningful contributions from both penalties 
+across $\alpha$. Holding $\lambda$ fixed also isolates $\alpha$ as the sole factor 
+controlling the balance: L1 promotes sparsity while L2 provides smooth weight shrinkage. 
+Varying $\alpha$ therefore directly probes the interaction between these two effects.
+
+Given the budget of four experiments, we select $\alpha$ values spanning the L2-dominant to L1-dominant regimes:
+
 \begin{itemize}
-    \item Run 1: $\lambda = 1\times10^{-5}$, $\alpha = 0.25$ (L2-dominant)
-    \item Run 2: $\lambda = 1\times10^{-5}$, $\alpha = 0.5$ (Balanced)
-    \item Run 3: $\lambda = 1\times10^{-5}$, $\alpha = 0.75$ (L1-dominant)
-    \item Run 4: $\lambda = 1\times10^{-5}$, $\alpha = 0.90$ (L1-dominant)
+    \item Run 1: $\lambda = 5\times10^{-5}$, $\alpha = 0.90$ (strong L1-dominant)
+    \item Run 2: $\lambda = 5\times10^{-5}$, $\alpha = 0.75$ (moderately L1-dominant)
+    \item Run 3: $\lambda = 5\times10^{-5}$, $\alpha = 0.50$ (balanced mixture)
+    \item Run 4: $\lambda = 5\times10^{-5}$, $\alpha = 0.25$ (L2-dominant)
 \end{itemize}
-These configurations allow us to assess the impact of varying the balance between L1 and L2 regularisation while keeping the overall strength constant. 
 
-}
+These configurations form a structured sweep across the full mixture range and allow us 
+to assess how the relative weighting of sparsity (L1) and shrinkage (L2) influences 
+generalisation performance when the overall regularisation strength is held constant}
 
 
 %% Question 8:
 \newcommand{\questionEight} {
-\youranswer{Question 8 - Explain the experimental details (e.g. hyperparameters), discuss the results in terms of their generalisation performance and overfitting. Select and test the best performing model as part of this analysis.}
-Based on the results in Table~\ref{tab:elastic_net_exps}, Run 2 ($\alpha=0.75$) is the best-performing model. This configuration achieved a validation accuracy of 84.2\%, a training error of 0.251, and a validation error of 0.495.
+On another note, to identify the best hyperparameter configuration, we performed a four-run sweep for additional regularisation techniques such as 
+Dropout, L1, L2, in addition to the Elastic Net experiments described earlier. Apart from that, we did a single run with label smoothing for comparison.
+All runs were trained for 100~epochs with a learning 
+rate of $1\times10^{-4}$, width 128, depth 4, and batch size 100, using 
+Adam optimisation with Cross-Entropy loss on the EMNIST dataset. 
+These settings were selected based on prior experiments, which indicated 
+stable convergence without overfitting.
 
-The critical metric for this selection is the validation error, which is the lowest of all four runs. While Run 1 ($\alpha=0.9$) has a marginally higher validation accuracy (84.3\%), its higher validation error (0.503 vs 0.495) indicates 
-slightly worse generalisation. A lower validation error is the most direct measure of how well a model performs on unseen data, suggesting Run 2 is the least overfit model.
+For Dropout, we evaluated inclusion probabilities of $0.6$, $0.7$, $0.85$, and $0.97$, 
+spanning a spectrum from strong to weak regularisation. For label smoothing, we tested 
+a smoothing factor of $0.1$, a standard choice that balances confidence and uncertainty in the 
+target distribution. Overall, all regularisation techniques except L1 by itself improved validation accuracy relative to the baseline model.
 
-Overall, the results indicate that a strong $L_1$-bias (a high $\alpha$ value) is beneficial for this problem, as both Run 1 ($\alpha=0.9$) and Run 2 ($\alpha=0.75$) clearly outperformed the more balanced (Run 3, $\alpha=0.5$) and $L_2$-biased 
-(Run 4, $\alpha=0.25$) configurations. Run 2 appears to hit the optimal point, leveraging the benefits of a strong $L_1$ penalty more effectively for generalisation than the other models.
-}
+\paragraph{Dropout}
+According to Table~\ref{tab:hp_search}, the best-performing configuration (and best result overall) was 
+Dropout with an inclusion probability of $0.97$. It achieved a validation accuracy of $85.4\%$, a training 
+error of $0.244$, and a validation error of $0.457$. This configuration also exhibits the second-lowest validation 
+error among all tested Dropout levels. 
+
+Figure~\ref{fig:dropoutrates} illustrates a consistent trend: increasing the inclusion probability improves 
+validation accuracy while simultaneously widening the generalisation gap. This indicates that although the model 
+fits the training data more closely at high inclusion rates, it also retains enough regularisation to prevent overfitting, 
+as the validation error does not increase substantially.  
+
+\paragraph{Label Smoothing}
+Label smoothing achieved a validation accuracy of $84.9\%$, with a training error of $1.02$ and a 
+validation error of $1.16$. While this represents an improvement over the baseline, it is clearly outperformed 
+by both Dropout and L2 regularisation. The relatively high validation error suggests that smoothing introduced excessive 
+uncertainty for this task. However, the generalisation gap decreased substantially from $0.292 \rightarrow 0.140$, indicating 
+that label smoothing effectively mitigates model overconfidence even when accuracy gains are limited.
+
+\paragraph{L1 and L2 Regularisation}
+L1 regularisation performed poorly across all tested strengths. The most competitive configuration ($\lambda = 5\times10^{-4}$) 
+achieved a validation accuracy of only $79.5\%$, and larger $\lambda$ values caused optimisation collapse. This behaviour is consistent 
+with the nature of L1: inducing sparsity may remove too many informative features, leading to underfitting. Figure~\ref{fig:l1l2_hp_search} 
+supports this interpretation, showing that increasing L1 strength consistently worsens validation accuracy and enlarges the generalisation 
+gap before optimisation fails entirely.
+
+In contrast, L2 regularisation delivered strong results. The best L2 configuration ($\lambda = 5\times10^{-4}$) achieved a 
+validation accuracy of $85.1\%$, a training error of $0.306$, and a validation error of $0.460$. This small $\lambda$ appears 
+to provide the right balance: sufficient shrinkage to reduce overfitting, without impeding the model's ability to learn. 
+As seen in Figure~\ref{fig:l1l2_hp_search}, increasing L2 strength initially improves performance, but excessive regularisation 
+eventually leads to optimisation difficulties.
+
+\paragraph{Elastic Net Regularisation}
+We now turn to the Elastic Net experiments summarised in Table~\ref{tab:elastic_net_exps} and Figure~\ref{fig:elasticnet}. 
+The trends mirror those observed for L1 and L2 individually: higher $\alpha$ values (i.e.\ a stronger L1 component) lead to lower 
+accuracy and error gaps and higher validation accuracy. This indicates that sparsity contributes positively to generalisation at the 
+tested $\lambda$ level.
+
+Run~2 ($\alpha = 0.75$) emerged as the best-performing configuration, with a validation accuracy of $85.1\%$, a training error of $0.305$, 
+and a validation error of $0.455$. Although Run~1 ($\alpha = 0.9$) achieved nearly identical validation performance, Run~2 demonstrated 
+slightly lower training error, suggesting marginally more stable optimisation. The small performance differences across high-$\alpha$ 
+settings imply that our chosen $\lambda$ favours L1-heavy regimes; however, the balanced configuration ($\alpha = 0.5$) and L2-biased 
+configuration ($\alpha = 0.25$) show a clear drop in performance. A more fine-grained sweep, particularly for $\alpha \in [0.7, 0.9]$, 
+could reveal whether even stronger results are attainable.
+
+\paragraph{Test Set Performance}
+The best model—Dropout with inclusion probability $0.97$—achieved a test accuracy of $84.7\%$ and a test error of $0.479$. 
+These results closely match the model's validation performance, confirming that it generalises well and has not overfitted to the validation set.
 
 
+\paragraph{Summary}
+Overall, Dropout with a high inclusion probability ($0.97$) proved to be the most effective regularisation method for this task, 
+yielding the highest validation accuracy and lowest validation error. Elastic Net with a strong L1 bias also performed competitively, 
+suggesting that sparsity plays a beneficial role in this classification problem. Together, these experiments indicate that regularisation 
+methods which emphasise feature selection (L1-like behaviour) tend to generalise best under the given architecture and dataset}
 
 %% Question 9:
 \newcommand{\questionNine} {
-\youranswer{Question 9 - A colleague proposed using a custom activation function (which can be identified as CustomActivationLayer() in your Coursework\_1.ipynb notebook and the mlp package). Run the prepared experiment in the "Problematic Training" cell in your Coursework\_1.ipynb notebook, and display the results in Figure~6. Analyse the results. Is the model overfitting? Explain the cause of the problematic performance of the model?}
 The results in Figure~\ref{fig:custom_activation} indicate that the model with the custom activation function struggles to learn effectively. The accuracy, and error curves behave very erratically. The training accuracy remains low, and the training error decreases, but not significantly,
 over epochs, suggesting that the model is not fitting the training data well. This poor performance is likely due to vanishing gradients, as evidenced by the gradient flow plot, which shows that gradients diminish across layers during 
 backpropagation. This issue prevents effective weight updates, leading to stagnation in learning. Consequently, the model does not exhibit overfitting; instead, it fails to learn from the training data altogether. It is also worth noting that the experiment was only run for 10 epochs, 
-which may not be sufficient for convergence, but the gradient issues suggest deeper problems with the activation function choice.
-
-}
+which may not be sufficient for convergence, but the gradient issues suggest deeper problems with the activation function choice}
 
 
 
 
 %% Question 10:
 \newcommand{\questionTen} {
-\youranswer{Question 10 - Briefly draw your conclusions based on the results from the previous sections (what are the take-away messages?), discussing them in the context of the overall literature, and conclude your report with a recommendation for future directions}
-The analysis presented in this report confirmed that increasing model capacity, either through width or depth, improves training fit but consistently leads to overfitting and poorer generalisation on the EMNIST dataset, as evidenced by the growing validation error. This aligns with the
-well-established bias-variance trade-off in the literature. Our experiments demonstrated that several regularisation techniques can effectively mitigate this. Both L2 regularisation (at $5 \times 10^{-4}$) and Dropout (at a 0.97 keep probability) successfully improved 
-validation accuracy and reduced the generalisation gap compared to the baseline. Label smoothing also offered a modest improvement. While L1 regularisation alone performed poorly, our Elastic Net experiment found that a combination heavily biased towards L1 (a high $\alpha$ of 0.75) 
-achieved the lowest validation error in its group, suggesting that the sparsity-inducing benefits of L1 are effective when balanced with L2's weight shrinkage. Finally, the failure of the custom activation function highlighted that poor performance is not always overfitting; in this 
-case, it was a critical vanishing gradient problem that prevented the model from learning at all. Future work should involve a more comprehensive grid search over the Elastic Net hyperparameters ($\lambda$ and $\alpha$) and explore combinations of the most effective techniques, 
-such as applying Dropout and L2 regularisation simultaneously, to potentially achieve further gains in generalisation.
-}
+The analysis presented in this report confirmed that increasing model capacity, whether through width or depth, 
+improves training fit but consistently leads to overfitting on the EMNIST dataset, as evidenced by the widening generalisation gap and rising validation error. 
+This behaviour aligns with the classical bias--variance trade-off described by Goodfellow et al.~\cite{Goodfellow-et-al-2016}
+
+Our experiments demonstrated that several regularisation techniques can mitigate this effect. Both Elastic Net 
+(with $\lambda = 5\times10^{-5}$ and $\alpha \in [0.75, 0.90]$) and Dropout with a high inclusion probability ($p = 0.97$) 
+achieved the strongest generalisation performance, improving validation accuracy and reducing the generalisation gap relative to the baseline. 
+Label smoothing also yielded a modest improvement, although it was less effective than L2-based methods. In contrast, 
+L1 regularisation alone performed poorly; however, its strong contribution within the Elastic Net configurations suggests that sparsity 
+offers benefits for EMNIST, whose images contain substantial redundancy and locally correlated features.
+
+The failure of the custom activation function further highlighted that poor learning dynamics are not always attributable to overfitting. 
+In this case, vanishing gradients prevented the model from learning, resulting in uniformly low accuracy and stagnant optimisation.
+
+Future work should involve a more comprehensive grid search over the Elastic Net hyperparameters $(\lambda, \alpha)$ and explore combined regularisation 
+approaches---for example, pairing L2 penalties with light Dropout---to determine whether complementary mechanisms can further improve generalisation performance}
 
 %% - - - - - - - - - - - - FIGURES - - - - - - - - - - - - 
 
 %% Question Figure 2:
 \newcommand{\questionFigureTwo} {
-\youranswer{Question Figure 2 - Replace the images in Figure 2 with figures depicting the accuracy and error, training and validation curves for your experiments varying the number of hidden units.
 %
 \begin{figure}[t]
     \centering
@@ -235,11 +314,9 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
     \label{fig:width}
 \end{figure} 
 }
-}
 
 %% Question Figure 3:
 \newcommand{\questionFigureThree} {
-\youranswer{Question Figure 3 - Replace these images with figures depicting the accuracy and error, training and validation curves for your experiments varying the number of hidden layers.
 %
 \begin{figure}[t]
     \centering
@@ -258,11 +335,9 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
     \label{fig:depth}
 \end{figure} 
 }
-}
 
 %% Question Figure 4:
 \newcommand{\questionFigureFour} {
-\youranswer{Question Figure 4 - Replace these images with figures depicting the Validation Accuracy and Generalisation Gap (difference between validation and training error) for each of the experiment results varying the Dropout inclusion rate, and L1/L2 weight penalty depicted in Table 3 (including any results you have filled in).
 %
 \begin{figure*}[t]
     \centering
@@ -271,46 +346,44 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
         \caption{Accuracy and error by inclusion probability.}
         \label{fig:dropoutrates}
     \end{subfigure} 
+    \hfill
     \begin{subfigure}{.475\linewidth}
         \centering
         \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_weightdecay_accuracy_gap.pdf}
         \caption{Accuracy and error by weight penalty.}
-        \label{fig:weightrates}
+        \label{fig:l1l2_hp_search}
     \end{subfigure} 
     \caption{Accuracy and error by regularisation strength of each method (Dropout and L1/L2 Regularisation).}
     \label{fig:hp_search}
 \end{figure*}
 }
-}
 
 %% Question Figure 5:
 \newcommand{\questionFigureFive} {
-\youranswer{Question Figure 5 - Replace these images with figures depicting the Validation Accuracy, Training Accuracy, and Generalisation Gap (difference between validation and training performance) for each of the experiment results varying the Dropout inclusion rate and L1/L2 weight penalty depicted in Table 3 (including any results you have filled in).
 %
 \begin{figure*}[t]
     \centering
     \begin{subfigure}{.475\linewidth}
         \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_l1l2_accuracy_gap.pdf}
         \caption{Validation and training accuracy, and generalisation gap for l1+l2 weight penalty.}
-        \label{fig:dropoutrates}
+        \label{fig:elasticnetaccuracy}
     \end{subfigure} 
     \hfill
     \begin{subfigure}{.475\linewidth}
         \centering
         \includegraphics[width=\linewidth]{figures/mlp_cw1_emnist_l1l2_error_gap.pdf}
         \caption{Training and validation error, and generalisation gap for l1+l2 weight penalty.}
-        \label{fig:weightrates}
+        \label{fig:elasticneterror}
     \end{subfigure} 
     \caption{Training and validation performance across regularisation strengths for L1/L2 methods. The generalisation gap highlights overfitting effects across experiments.}
-    \label{fig:hp_search}
+    \label{fig:elasticnet}
 \end{figure*}
 }
-}
+
 
 
 %% Question Figure 6:
 \newcommand{\questionFigureSix} {
-\youranswer{Question Figure 6 - Add figures depicting the Training Accuracy, Error, and Gradient Flow Across Layers for the 1 experiment run with the Custom Activation function (produce these by running the "Problematic Training" cell in the Coursework\_1.ipynb notebook).
 \begin{figure*}[t]
     \centering
     \begin{subfigure}{.475\linewidth}
@@ -337,7 +410,7 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
     \label{fig:custom_activation}
 \end{figure*}
 }
-}
+
 \newcommand{\capacity}{
 \begin{figure}[H]
     \centering
@@ -354,8 +427,6 @@ such as applying Dropout and L2 regularisation simultaneously, to potentially ac
 
 %% Question Table 1:
 \newcommand{\questionTableOne} {
-\youranswer{
-Question Table 1 - Fill in Table 1 with the results from your experiments varying the number of hidden units.
 %
 \begin{table}[t]
     \centering
@@ -372,13 +443,9 @@ Question Table 1 - Fill in Table 1 with the results from your experiments varyin
     \label{tab:width_exp}
 \end{table}
 }
-}
 
 %% Question Table 2:
 \newcommand{\questionTableTwo} {
-\youranswer{
-Question Table 2 - Fill in Table 2 with the results from your experiments varying the number of hidden layers.
-%
 \begin{table}[t]
     \centering
     \begin{tabular}{c|ccc}
@@ -394,12 +461,9 @@ Question Table 2 - Fill in Table 2 with the results from your experiments varyin
     \label{tab:depth_exps}
 \end{table}
 }
-}
 
 %% Question Table 3:
 \newcommand{\questionTableThree} {
-\youranswer{
-Question Table 3 - Fill in Table 3 with the results from your experiments for the missing hyperparameter values for each of L1 regularisation, L2 regularisation, Dropout and label smoothing (use the values shown on the table).
 %
 \begin{table*}[t]
     \centering
@@ -434,14 +498,12 @@ Question Table 3 - Fill in Table 3 with the results from your experiments for th
     \caption{Results of all hyperparameter search experiments. \emph{italics} indicate the best results per series (Dropout, L1 Regularisation, L2 Regularisation, Label smoothing) and \textbf{bold} indicates the best overall.}
     \label{tab:hp_search}
 \end{table*}
-}
+
 }
 
 
 %% Question Table 4:
 \newcommand{\questionTableFour} {
-\youranswer{
-Question Table 4 - Results from 4 training runs varying L1+L2 regularisation.
 %
 \begin{table*}[t]
     \centering
@@ -449,19 +511,18 @@ Question Table 4 - Results from 4 training runs varying L1+L2 regularisation.
     \toprule
         Run & $\lambda$ / $\alpha$ & Val. Acc. (\%) & Train Error & Val. Error \\
     \midrule
-        1 & $1 \times 10^{-5}$ / 0.900 & 84.3 & 0.263 & 0.503 \\
-        2 & $1 \times 10^{-5}$ / 0.750 & 84.2 & 0.251 & 0.495 \\
-        3 & $1 \times 10^{-5}$ / 0.500 & 83.8 & 0.248 & 0.517 \\
-        4 & $1 \times 10^{-5}$ / 0.250 & 83.9 & 0.258 & 0.517 \\
+        1 & $5\times10^{-5}$ / 0.900 & 85.1 & 0.309 & 0.455 \\
+        2 & $5\times10^{-5}$ / 0.750 & 85.1 & 0.305 & 0.455 \\
+        3 & $5\times10^{-5}$ / 0.500 & 85.0 & 0.284 & 0.459 \\
+        4 & $5\times10^{-5}$ / 0.250 & 84.2 & 0.277 & 0.488 \\
          
          
          
     \bottomrule
     \end{tabular}
-    \caption{Validation accuracy (\%) and training/validation cross-entropy error for four runs with a fixed regularisation strength $\lambda = 1 \times 10^{-5}$ and varying Elastic Net mixing parameter $\alpha$.}
+    \caption{Validation accuracy (\%) and training/validation cross-entropy error for four runs with a fixed regularisation strength $\lambda = 5\times10^{-5}$ and varying Elastic Net mixing parameter $\alpha$.}
     \label{tab:elastic_net_exps}
 \end{table*}
-}
 }
 
 %% END of YOUR ANSWERS
