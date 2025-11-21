@@ -5,46 +5,36 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Goodfellow et~al.(2016)Goodfellow, Bengio, and
-  Courville]{Goodfellow-et-al-2016}
+\bibitem[Goodfellow et~al.(2016)Goodfellow, Bengio, and Courville]{Goodfellow-et-al-2016}
 Goodfellow, Ian, Bengio, Yoshua, and Courville, Aaron.
 \newblock \emph{Deep Learning}.
 \newblock MIT Press, 2016.
 \newblock \url{http://www.deeplearningbook.org}.
 
-\bibitem[Müller et~al.(2020)Müller, Kornblith, and
-  Hinton]{müller2020doeslabelsmoothinghelp}
+\bibitem[Müller et~al.(2020)Müller, Kornblith, and Hinton]{müller2020doeslabelsmoothinghelp}
 Müller, Rafael, Kornblith, Simon, and Hinton, Geoffrey.
 \newblock When does label smoothing help?, 2020.
 \newblock URL \url{https://arxiv.org/abs/1906.02629}.
 
 \bibitem[Ng(2004)]{ng2004feature}
 Ng, Andrew~Y.
-\newblock Feature selection, l1 vs. l2 regularization, and rotational
-  invariance.
-\newblock In \emph{Proceedings of the twenty-first international conference on
-  Machine learning}, pp.\ ~78, 2004.
+\newblock Feature selection, l1 vs. l2 regularization, and rotational invariance.
+\newblock In \emph{Proceedings of the twenty-first international conference on Machine learning}, pp.\ ~78, 2004.
 
-\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and
-  Salakhutdinov]{srivastava2014dropout}
-Srivastava, Nitish, Hinton, Geoffrey, Krizhevsky, Alex, Sutskever, Ilya, and
-  Salakhutdinov, Ruslan.
+\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and Salakhutdinov]{srivastava2014dropout}
+Srivastava, Nitish, Hinton, Geoffrey, Krizhevsky, Alex, Sutskever, Ilya, and Salakhutdinov, Ruslan.
 \newblock Dropout: a simple way to prevent neural networks from overfitting.
-\newblock \emph{The journal of machine learning research}, 15\penalty0
-  (1):\penalty0 1929--1958, 2014.
+\newblock \emph{The journal of machine learning research}, 15\penalty0 (1):\penalty0 1929--1958, 2014.
 
-\bibitem[Zhang et~al.(2018)Zhang, Cisse, Dauphin, and
-  Lopez-Paz]{zhang2018mixupempiricalriskminimization}
+\bibitem[Zhang et~al.(2018)Zhang, Cisse, Dauphin, and Lopez-Paz]{zhang2018mixupempiricalriskminimization}
 Zhang, Hongyi, Cisse, Moustapha, Dauphin, Yann~N., and Lopez-Paz, David.
 \newblock mixup: Beyond empirical risk minimization, 2018.
 \newblock URL \url{https://arxiv.org/abs/1710.09412}.
 
 \bibitem[Zou \& Hastie(2005)Zou and Hastie]{Zhang2018}
 Zou, Hui and Hastie, Trevor.
-\newblock Zou h, hastie t. regularization and variable selection via the
-  elastic net. j r statist soc b. 2005;67(2):301-20.
-\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
-  Methodology)}, 67:\penalty0 301 -- 320, 04 2005.
+\newblock Zou h, hastie t. regularization and variable selection via the elastic net. j r statist soc b. 2005;67(2):301-20.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical Methodology)}, 67:\penalty0 301 -- 320, 04 2005.
 \newblock \doi{10.1111/j.1467-9868.2005.00503.x}.
 
 \end{thebibliography}
