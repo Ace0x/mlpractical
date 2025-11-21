@@ -162,10 +162,11 @@ from $5\times10^{-4}$--$10^{-3}$,  and is far more tolerant than L1. However, at
 showing that excessively large penalties remain undesirable.
 
 Although L2 performs best at moderate $\lambda$, the strong sensitivity of L1 means that any $\lambda$ chosen in this
- middle region would cause the L1 term to dominate the combined Elastic Net penalty.
- In order to study the interaction between the L1 and L2 components, we require a $\lambda$ 
- small enough that both penalties contribute, and does not overwhelm optimisation, so that the 
- effect of varying $\alpha$ can be observed cleanly.
+middle region would cause the L1 term to dominate the combined Elastic Net penalty.
+As established by \citealt{Zhang2018}, while L1 provides necessary sparsity, it lacks the grouping effect required for stability 
+in the presence of correlated features; the Elastic Net formulation is specifically designed to overcome these limitations by adding the quadratic L2 term. 
+Therefore, to properly study the interaction, we require a $\lambda$ small enough that the L1 component does not overwhelm optimisation, 
+allowing the stabilizing effect of the L2 component to be observed cleanly.
 
 This motivates the following research question:
 
@@ -177,7 +178,7 @@ To answer this, we fix a conservative value of $\lambda = 5\times10^{-5}$, which
 stable training while preserving meaningful contributions from both penalties 
 across $\alpha$. Holding $\lambda$ fixed also isolates $\alpha$ as the sole factor 
 controlling the balance: L1 promotes sparsity while L2 provides smooth weight shrinkage. 
-Varying $\alpha$ therefore directly probes the interaction between these two effects.
+Varying $\alpha$ therefore directly probes the trade-off between feature selection and coefficient shrinkage described by \citealt{Zhang2018}.
 
 Given the budget of four experiments, we select $\alpha$ values spanning the L2-dominant to L1-dominant regimes:
 
@@ -220,11 +221,13 @@ fits the training data more closely at high inclusion rates, it also retains eno
 as the validation error does not increase substantially.  
 
 \paragraph{Label Smoothing}
-Label smoothing achieved a validation accuracy of $84.9\%$, with a training error of $1.02$ and a 
-validation error of $1.16$. While this represents an improvement over the baseline, it is clearly outperformed 
-by both Dropout and L2 regularisation. The relatively high validation error suggests that smoothing introduced excessive 
-uncertainty for this task. However, the generalisation gap decreased substantially from $0.292 \rightarrow 0.140$, indicating 
-that label smoothing effectively mitigates model overconfidence even when accuracy gains are limited.
+Label smoothing achieved a validation accuracy of $85.0\%$, with a training error of $1.01$ and a 
+validation error of $0.551$. While this is an improvement over the baseline, it is outperformed by both 
+Dropout and L2 regularisation. The notably higher training error together with a negative generalisation gap 
+($-0.459$). This behaviour aligns with \cite{müller2020doeslabelsmoothinghelp}, who show that label smoothing increases 
+training error but improves calibration. Because the training labels are softened, the model cannot 
+perfectly match them and therefore receives a higher loss, whereas the validation set uses standard 
+labels. Therefore, it can be concluded that this is not an indication of overfitting or underfitting.
 
 \paragraph{L1 and L2 Regularisation}
 L1 regularisation performed poorly across all tested strengths. The most competitive configuration ($\lambda = 5\times10^{-4}$) 
@@ -276,13 +279,22 @@ which may not be sufficient for convergence, but the gradient issues suggest dee
 %% Question 10:
 \newcommand{\questionTen} {
 The analysis presented in this report confirmed that increasing model capacity, whether through width or depth, 
-improves training fit but consistently leads to overfitting on the EMNIST dataset, as evidenced by the widening generalisation gap and rising validation error. 
-This behaviour aligns with the classical bias--variance trade-off described by Goodfellow et al.~\cite{Goodfellow-et-al-2016}
+increases the number of learnable parameters, enabling the model to represent more complex functions. 
+Wider networks increase parallel representational power, while deeper networks add complexity and non-linearity. 
+However, in both cases, capacity grows faster than the amount of available data, which amplifies variance and leads 
+to earlier overfitting. This explains why validation error rises with both width and depth despite improved training accuracy, 
+aligning with the classical bias--variance trade-off described by Goodfellow et al.~\cite{Goodfellow-et-al-2016}
 
-Our experiments demonstrated that several regularisation techniques can mitigate this effect. Both Elastic Net 
-(with $\lambda = 5\times10^{-5}$ and $\alpha \in [0.75, 0.90]$) and Dropout with a high inclusion probability ($p = 0.97$) 
-achieved the strongest generalisation performance, improving validation accuracy and reducing the generalisation gap relative to the baseline. 
-Label smoothing also yielded a modest improvement, although it was less effective than L2-based methods. In contrast, 
+Our experiments demonstrated that several regularisation techniques can mitigate this effect. Dropout with a high inclusion probability ($p = 0.97$) 
+achieved the best generalisation performance, improving validation accuracy ($85.4\%$) and reducing the generalisation gap ($0.213$) relative to the baseline.
+This diverges from Srivastava et al.~\cite{srivastava2014dropout}, who find that Dropout is particularly effective for image classification tasks, 
+but recommend an inclusion probability range of 0.5--0.8, noting that validation error increases as p approaches 1. However, 
+their finding that Dropout often outperforms pure weight decay aligns with our observation that Dropout achieved stronger generalisation than either L1 or L2 alone.
+Our finding that Elastic Net great validation performance agrees with the original motivation by Zou and Hastie~\cite{Zhang2018}, 
+who show that Elastic Net is particularly effective when inputs exhibit local correlations—precisely the case in EMNIST, where neighbouring pixels carry 
+redundant information.
+
+Label smoothing also yielded a modest improvement, although it was less effective than Dropout, L2, and Elastic Net based methods. In contrast, 
 L1 regularisation alone performed poorly; however, its strong contribution within the Elastic Net configurations suggests that sparsity 
 offers benefits for EMNIST, whose images contain substantial redundancy and locally correlated features.
 
@@ -290,7 +302,12 @@ The failure of the custom activation function further highlighted that poor lear
 In this case, vanishing gradients prevented the model from learning, resulting in uniformly low accuracy and stagnant optimisation.
 
 Future work should involve a more comprehensive grid search over the Elastic Net hyperparameters $(\lambda, \alpha)$ and explore combined regularisation 
-approaches---for example, pairing L2 penalties with light Dropout---to determine whether complementary mechanisms can further improve generalisation performance}
+approaches---for example, pairing L2 penalties with light Dropout---to determine whether complementary mechanisms can further improve generalisation performance. 
+Additionally, beyond the methods tested in this report, several additional regularisation strategies could further improve generalisation. 
+One promising direction is \textit{Mixup} \cite{zhang2018mixupempiricalriskminimization}, which constructs synthetic training examples by taking convex combinations 
+of pairs of inputs and their corresponding labels. This encourages the model to behave linearly between samples, reduces sensitivity to high-frequency patterns, 
+and has been shown to significantly mitigate overfitting in image classification tasks. Incorporating Mixup into the present architecture—or combining it with 
+Dropout or weight decay—could provide a complementary form of regularisation and is a natural avenue for future work.}
 
 %% - - - - - - - - - - - - FIGURES - - - - - - - - - - - - 
 
@@ -492,7 +509,7 @@ approaches---for example, pairing L2 penalties with light Dropout---to determine
                  & 5e-3 & 81.3 & 0.586 & 0.607 \\
                  & 5e-2 & 39.2 & 2.258 & 2.256  \\
     \midrule
-        Label smoothing & 0.1 & 84.9 & 1.02 & 1.16 \\
+        Label smoothing & 0.1 & 85.0 & 1.01 & 0.551 \\
     \bottomrule
     \end{tabular}
     \caption{Results of all hyperparameter search experiments. \emph{italics} indicate the best results per series (Dropout, L1 Regularisation, L2 Regularisation, Label smoothing) and \textbf{bold} indicates the best overall.}
